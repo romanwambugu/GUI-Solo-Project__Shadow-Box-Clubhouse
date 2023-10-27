@@ -7,16 +7,15 @@ import random
 class ShadowBox(QWidget):
     def __init__(self):
         super().__init__()
+        #Set Window Title
         self.setWindowTitle("Shadow Box Clubhouse")
 
-        self.incremnentalCounter = 0
-
-        # Create Layout
+        #Create Layout
         main_layout = QGridLayout()
         self.setLayout(main_layout)
         self.setStyleSheet("background-color: white;")
 
-        # Add Label with Text to Layout
+        #Add Text labels to Layout
         font = QFont()
         font.setPointSize(50)
         font.setBold(True)
@@ -29,7 +28,7 @@ class ShadowBox(QWidget):
         self.movementText_label.setFont(font)
         main_layout.addWidget(self.movementText_label, 0, 0)
 
-        #Add Mickey Mouse to Layout
+        #Add a Mickey Mouse Image to Layout
         MickeyHead_Image = QPixmap("Image Folder/Mickey_Head.png")
         MickeyHead_Label = QLabel(self)
         MickeyHead_Label.setPixmap(MickeyHead_Image)
@@ -43,7 +42,7 @@ class ShadowBox(QWidget):
 
         #Set Button Style - (Color/Font)
         button_style = "background-color: red; color: white; font-weight: bold;"
-        button_style += f" font-size: {20}px;"
+        button_style += f" font-size: {30}px;"
         self.Up_button.setStyleSheet(button_style)
         self.Left_button.setStyleSheet(button_style)
         self.Right_button.setStyleSheet(button_style)
@@ -67,30 +66,29 @@ class ShadowBox(QWidget):
         self.Right_button.clicked.connect(self.User_RightButton)
         self.Down_button.clicked.connect(self.User_DownButton)
 
+         #Set Incremental Counter
+        self.incremnentalCounter = 0
+
     #Computer Button Functions
     def Computer_UpButton(self):
-        print("Mickey Swiped Up!")
         Glove_UpImage = QPixmap("Image Folder/MickeyGlove_Up.png")
         Glove_UpLabel = QLabel(self)
         Glove_UpLabel.setPixmap(Glove_UpImage)
         self.layout().addWidget(Glove_UpLabel, 0, 1)
 
     def Computer_LeftButton(self):
-        print("Mickey Swiped Left!")
         Glove_LeftImage = QPixmap("Image Folder/MickeyGlove_Left.png")
         Glove_LeftLabel = QLabel(self)
         Glove_LeftLabel.setPixmap(Glove_LeftImage)
         self.layout().addWidget(Glove_LeftLabel, 0, 1)
 
     def Computer_RightButton(self):
-        print("Mickey Swiped Right!")
         Glove_RightImage = QPixmap("Image Folder/MickeyGlove_Right.png")
         Glove_RightLabel = QLabel(self)
         Glove_RightLabel.setPixmap(Glove_RightImage)
         self.layout().addWidget(Glove_RightLabel, 0, 1)
 
     def Computer_DownButton(self):
-        print("Mickey Swiped Down!")
         Glove_DownImage = QPixmap("Image Folder/MickeyGlove_Down.png")
         Glove_DownLabel = QLabel(self)
         Glove_DownLabel.setPixmap(Glove_DownImage)
@@ -98,30 +96,26 @@ class ShadowBox(QWidget):
 
     #User Button Functions
     def User_UpButton(self):
-        print("\nYou Moved Up!")
         user_choice = "Up"
         computer_choice = self.Computer_Movement()
         self.Check_Movement(user_choice, computer_choice)
 
     def User_LeftButton(self):
-        print("\nYou Moved Left!")
         user_choice = "Left"
         computer_choice = self.Computer_Movement()
         self.Check_Movement(user_choice, computer_choice)
 
     def User_RightButton(self):
-        print("\nYou Moved Right!")
         user_choice = "Right"
         computer_choice = self.Computer_Movement()
         self.Check_Movement(user_choice, computer_choice)
 
     def User_DownButton(self):
-        print("\nYou Moved Down!")
         user_choice = "Down"
         computer_choice = self.Computer_Movement()
         self.Check_Movement(user_choice, computer_choice)
 
-    #Simulate a Computer button click
+    #Simulate a Computer button Click
     def Computer_Movement(self):
         button_list = [self.Computer_UpButton, self.Computer_LeftButton, self.Computer_RightButton, self.Computer_DownButton]
         computer_RandomButton = random.choice(button_list)
@@ -138,9 +132,10 @@ class ShadowBox(QWidget):
         
     #Checks if User and Computer Buttons Match
     def Check_Movement(self, user_choice, computer_choice):
-        self.movementText_label.setText("\nYou Moved " + user_choice + "\nMickey Moved " + computer_choice)
+        self.movementText_label.setText("\nMickey Swiped " + computer_choice + "\nYou Moved " + user_choice)
         if user_choice == computer_choice:
-            print("You Matched!")
+            #Ends Game
+            self.movementText_label.setText("\nYou both went " + user_choice)
             self.Up_button.clicked.disconnect(self.User_UpButton)
             self.Left_button.clicked.disconnect(self.User_LeftButton)
             self.Right_button.clicked.disconnect(self.User_RightButton)
@@ -151,9 +146,12 @@ class ShadowBox(QWidget):
             YouLose_Label.setPixmap(YouLose_Image)
             self.layout().addWidget(YouLose_Label, 0, 1)
 
-            self.message_label.setText("Gotcha! \nYou Lasted " + str(self.incremnentalCounter) + " Rounds!")
+            if self.incremnentalCounter == 1:
+                self.message_label.setText("Gotcha in 4K! \nYou Lasted " + str(self.incremnentalCounter) + " Round!")
+            else:
+                self.message_label.setText("Gotcha in 4K! \nYou Lasted " + str(self.incremnentalCounter) + " Rounds!")
         else:
-            print("You Didn't Match!")
+            #User Continues Playing
             self.incremnentalCounter += 1
             self.message_label.setText(str(self.incremnentalCounter))
 
@@ -161,7 +159,7 @@ def main():
     app = QApplication(sys.argv)
     game = ShadowBox()
     game.show()
-    game.showMaximized() # Set widget to windowed fullscreen
+    game.showMaximized() #Set widget to windowed fullscreen
     app.exec()
 
 main()
