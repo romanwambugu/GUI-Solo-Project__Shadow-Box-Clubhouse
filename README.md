@@ -1,3 +1,3 @@
 # Learning-PySide6
 
-Solo for PySide6: Roman Wambugu
+Solo group for PySide6: Roman Wambugu
