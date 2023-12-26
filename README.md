@@ -1,4 +1,4 @@
 # Learning-PySide6
 
-Solo Group for PySide6:
+Group for Project:
 - Roman Wambugu
