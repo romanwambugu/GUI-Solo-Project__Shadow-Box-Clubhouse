@@ -1,4 +1,5 @@
 # Shadow Box Clubhouse Game
+
 Purpose:
 - Learning how to use PySide6
   
